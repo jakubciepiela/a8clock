@@ -1,0 +1,24 @@
+BYTE ACTIVELOOP
+
+INCLUDE "D2:CONSOLE.ACT"
+INCLUDE "D3:GR0.ACT"     
+
+PROC DoOption()
+  activeloop=0
+return
+
+PROC MAIN()
+byte a
+INITCONSOLE()
+Option=DoOption
+GRAPHICS(0)
+ACTIVELOOP=1
+WHILE ACTIVELOOP<>0
+DO
+for a = 33 to 63
+do
+  ClearScreen(a)
+od
+OD
+RETURN
+

@@ -1,0 +1,21 @@
+
+
+PROC Hello()
+  PrintE("hello!")
+RETURN
+
+proc VRUN(CARD address)
+;  CARD address2
+;  address2 = address
+  [$6C address]
+
+
+RETURN
+
+PROC MAIN()
+  CARD POINTER virtualProc
+  virtualProc = Hello
+  VRUN(virtualProc)
+  Printe("done") 
+RETURN
+
