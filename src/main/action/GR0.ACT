@@ -4,11 +4,6 @@ CARD POINTER ScrBase=88
 PROC ClearScreen(BYTE c)
 CARD i
 BYTE POINTER p
-;for i=0 to 960
-;do
-;  p = ScrBase^ + i
-;  p^ = c
-;od
 SetBlock(ScrBase^, 960, c)
 RETURN
 
