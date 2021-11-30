@@ -1,3 +1,5 @@
+INCLUDE "D8:DIV24.ACT"
+
 MODULE
 
 BYTE PalOrNtscFlag = 53258
@@ -16,140 +18,101 @@ PROC InitTime()
 ; it sets the calculation logic acordingly
 RETURN
 
-PROC Div24ASM0()
-BYTE reminderH=$CA
-BYTE reminderM=$CB
-BYTE reminderL=$CC
-BYTE pztemp=$CD
-BYTE dividendH
-BYTE dividendM
-BYTE dividendL
-
-BYTE divisorH
-BYTE divisorM
-BYTE divisorL
-
-
-
-
-   [$A9 $00]
-   [$85 $CA $85 $CB  $85 $CC $A2 $18]
-   [$0E dividendL $2E  $A1 $AA $2E $A2]
-   [$AA $26 $CA $26]
-   [$CB $26 $CC $A5  $CA $38 $ED $B0]
-   [$AA $A8 $A5 $CB  $ED $B1 $AA $85]
-   [$CD $A5 $CC $ED  $B2 $AA $90 $0B]
-   [$85 $CC $A5 $CD]
-   [$85 $CB $84 $CA  $EE $A0 $AA $CA]
-   [$D0 $CE]
-
-  ;  [$A9 $00]
-  ;  [$85 $CA $85 $CB  $85 $CC $A2 $18]
-  ;  [$0E $A0 $AA $2E  $A1 $AA $2E $A2]
-  ;  [$AA $26 $CA $26]
-  ;  [$CB $26 $CC $A5  $CA $38 $ED $B0]
-  ;  [$AA $A8 $A5 $CB  $ED $B1 $AA $85]
-  ;  [$CD $A5 $CC $ED  $B2 $AA $90 $0B]
-  ;  [$85 $CC $A5 $CD]
-  ;  [$85 $CB $84 $CA  $EE $A0 $AA $CA]
-  ;  [$D0 $CE]
-RETURN
-
-PROC Div24ASM(
-      )
-
-BYTE dividendH=$A3
-BYTE dividendM=$A4
-BYTE dividendL=$A5
-
-BYTE divisorH=$A6
-BYTE divisorM=$A7
-BYTE divisorL=$A8
-
-BYTE reminderH=$A9
-BYTE reminderM=$AA
-BYTE reminderL=$AB
-
-dividendH=0
-dividendM=0
-dividendL=100
-
-divisorL = 10
-divisorM = 0
-divisorH = 0
-
-
-  Print("D1: ")
-  PrintB(dividendL)
-  Print(",")
-  PrintB(dividendM)
-  Print(",")
-  PrintB(dividendH)
-  Print(" D2: ")
-  PrintB(divisorL)
-  Print(",")
-  PrintB(divisorM)
-  Print(",")
-  PrintB(divisorH)
-  Print(" R: ")
-  PrintB(reminderL)
-  Print(",")
-  PrintB(reminderM)
-  Print(",")
-  PrintBE(reminderH)
-
-RETURN
-
-PROC Div24()
-  Div24ASM(0,0,0,
-  0,0,100,
-  0,0,10,
-  0,0,0,0)
-RETURN
-
 PROC timeHHMMSS()
-  BYTE low=20, mid=19, hi=18
+  BYTE lo=20, mid=19, hi=18
+  Div24IO dataIO ; result will hold seconds from start
+  Div24IO dIOSec ; seconds
+  Div24IO dIOMin ; minutes
+  Div24IO dIOHrs ; hours
 
-BYTE dividendH;=$d4
-BYTE dividendM;=$d5
-BYTE dividendL;=$d6
-BYTE divisorH=$d8
-BYTE divisorM=$d9
-BYTE divisorL=$da
-BYTE reminderH=$dc
-BYTE reminderM=$dd
-BYTE reminderL=$de
-  
-  Div24()
+    dataIO.dividendH = hi
+    dataIO.dividendM = mid
+    dataIO.dividendL = lo
+
+    dataIO.divisorH = 0
+    dataIO.divisorM = 0
+    dataIO.divisorL = 60
+
+  Div24(dataIO)
+
+    dIOSec.dividendH = dataIO.resultH
+    dIOSec.dividendM = dataIO.resultM
+    dIOSec.dividendL = dataIO.resultL
+    dIOSec.divisorH = 0
+    dIOSec.divisorM = 0
+    dIOSec.divisorL = 60
+Div24(dIOSec)
+
+    dIOMin.dividendH = dIOSec.resultH
+    dIOMin.dividendM = dIOSec.resultM
+    dIOMin.dividendL = dIOSec.resultL
+    dIOMin.divisorH = 0
+    dIOMin.divisorM = 0
+    dIOMin.divisorL = 60
+Div24(dIOMin)
+
+    dIOHrs.dividendH = dIOMin.resultH
+    dIOHrs.dividendM = dIOMin.resultM
+    dIOHrs.dividendL = dIOMin.resultL
+    dIOHrs.divisorH = 0
+    dIOHrs.divisorM = 0
+    dIOHrs.divisorL = 60
+Div24(dIOHrs)
 
 
-  Print("D1: ")
-  PrintB(dividendL)
-  Print(",")
-  PrintB(dividendM)
-  Print(",")
-  PrintB(dividendH)
-  Print(" D2: ")
-  PrintB(divisorL)
-  Print(",")
-  PrintB(divisorM)
-  Print(",")
-  PrintB(divisorH)
-  Print(" R: ")
-  PrintB(reminderL)
-  Print(",")
-  PrintB(reminderM)
-  Print(",")
-  PrintBE(reminderH)
+  ; Print("T:")
+  ; PrintB(lo)
+  ; Print(",")
+  ; PrintB(mid)
+  ; Print(",")
+  ; PrintB(hi)
+
+  ; Print(" R0:")
+  ; PrintB(dataIO.resultL)
+  ; Print(",")
+  ; PrintB(dataIO.resultM)
+  ; Print(",")
+  ; PrintB(dataIO.resultH)
+  ; Print("/")
+  ; PrintB(dataIO.reminderL)
+  ; Print(",")
+  ; PrintB(dataIO.reminderM)
+  ; Print(",")
+  ; PrintB(dataIO.reminderH)
+
+  ; Print(" R1:")
+  ; PrintB(dIOSec.resultL)
+  ; Print(",")
+  ; PrintB(dIOSec.resultM)
+  ; Print(",")
+  ; PrintB(dIOSec.resultH)
+  ; Print("/")
+  ; PrintB(dIOSec.reminderL)
+  ; Print(",")
+  ; PrintB(dIOSec.reminderM)
+  ; Print(",")
+  ; PrintB(dIOSec.reminderH)
+
+  Print("TS= ")
+  PrintB(dIOHrs.reminderL)
+  Print(":")
+  PrintB(dIOMin.reminderL)
+  Print(":")
+  PrintB(dIOSec.reminderL)
+
+  PrintE("")
+
 
 
 RETURN
+
+
 
 PROC TimeTest()
   CARD i
   InitTime()
   for i=0 to 1000
   do
-    Div24()
+    timeHHMMSS()
   od
 RETURN
