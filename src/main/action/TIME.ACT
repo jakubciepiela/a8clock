@@ -110,7 +110,7 @@ PROC TimeTest()
   INITCONSOLE()
   Option=DoOption
   InitTime()
-  PrintE("Press Option to stop")
+  PrintE("Press Option to stop.")
   activeLoop=1
   WHILE activeLoop<>0
     DO
