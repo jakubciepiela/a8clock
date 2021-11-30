@@ -1,0 +1,155 @@
+MODULE
+
+BYTE PalOrNtscFlag = 53258
+
+BYTE FUNC IsPal()
+  IF PalOrNtscFlag=1 THEN
+    RETURN (1)
+  ELSE 
+    RETURN (0)
+  FI
+RETURN (0)
+
+PROC InitTime()
+  PrintE("Time lib initialized")
+; checks if the system is PAL or NTSC
+; it sets the calculation logic acordingly
+RETURN
+
+PROC Div24ASM0()
+BYTE reminderH=$CA
+BYTE reminderM=$CB
+BYTE reminderL=$CC
+BYTE pztemp=$CD
+BYTE dividendH
+BYTE dividendM
+BYTE dividendL
+
+BYTE divisorH
+BYTE divisorM
+BYTE divisorL
+
+
+
+
+   [$A9 $00]
+   [$85 $CA $85 $CB  $85 $CC $A2 $18]
+   [$0E dividendL $2E  $A1 $AA $2E $A2]
+   [$AA $26 $CA $26]
+   [$CB $26 $CC $A5  $CA $38 $ED $B0]
+   [$AA $A8 $A5 $CB  $ED $B1 $AA $85]
+   [$CD $A5 $CC $ED  $B2 $AA $90 $0B]
+   [$85 $CC $A5 $CD]
+   [$85 $CB $84 $CA  $EE $A0 $AA $CA]
+   [$D0 $CE]
+
+  ;  [$A9 $00]
+  ;  [$85 $CA $85 $CB  $85 $CC $A2 $18]
+  ;  [$0E $A0 $AA $2E  $A1 $AA $2E $A2]
+  ;  [$AA $26 $CA $26]
+  ;  [$CB $26 $CC $A5  $CA $38 $ED $B0]
+  ;  [$AA $A8 $A5 $CB  $ED $B1 $AA $85]
+  ;  [$CD $A5 $CC $ED  $B2 $AA $90 $0B]
+  ;  [$85 $CC $A5 $CD]
+  ;  [$85 $CB $84 $CA  $EE $A0 $AA $CA]
+  ;  [$D0 $CE]
+RETURN
+
+PROC Div24ASM(
+      )
+
+BYTE dividendH=$A3
+BYTE dividendM=$A4
+BYTE dividendL=$A5
+
+BYTE divisorH=$A6
+BYTE divisorM=$A7
+BYTE divisorL=$A8
+
+BYTE reminderH=$A9
+BYTE reminderM=$AA
+BYTE reminderL=$AB
+
+dividendH=0
+dividendM=0
+dividendL=100
+
+divisorL = 10
+divisorM = 0
+divisorH = 0
+
+
+  Print("D1: ")
+  PrintB(dividendL)
+  Print(",")
+  PrintB(dividendM)
+  Print(",")
+  PrintB(dividendH)
+  Print(" D2: ")
+  PrintB(divisorL)
+  Print(",")
+  PrintB(divisorM)
+  Print(",")
+  PrintB(divisorH)
+  Print(" R: ")
+  PrintB(reminderL)
+  Print(",")
+  PrintB(reminderM)
+  Print(",")
+  PrintBE(reminderH)
+
+RETURN
+
+PROC Div24()
+  Div24ASM(0,0,0,
+  0,0,100,
+  0,0,10,
+  0,0,0,0)
+RETURN
+
+PROC timeHHMMSS()
+  BYTE low=20, mid=19, hi=18
+
+BYTE dividendH;=$d4
+BYTE dividendM;=$d5
+BYTE dividendL;=$d6
+BYTE divisorH=$d8
+BYTE divisorM=$d9
+BYTE divisorL=$da
+BYTE reminderH=$dc
+BYTE reminderM=$dd
+BYTE reminderL=$de
+  
+  Div24()
+
+
+  Print("D1: ")
+  PrintB(dividendL)
+  Print(",")
+  PrintB(dividendM)
+  Print(",")
+  PrintB(dividendH)
+  Print(" D2: ")
+  PrintB(divisorL)
+  Print(",")
+  PrintB(divisorM)
+  Print(",")
+  PrintB(divisorH)
+  Print(" R: ")
+  PrintB(reminderL)
+  Print(",")
+  PrintB(reminderM)
+  Print(",")
+  PrintBE(reminderH)
+
+
+RETURN
+
+PROC TimeTest()
+  CARD i
+  InitTime()
+  for i=0 to 1000
+  do
+    Div24()
+  od
+RETURN

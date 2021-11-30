@@ -1,0 +1,59 @@
+; Uses compiled version of procedure defined here:
+; https://codebase64.org/doku.php?id=base:24bit_division_24-bit_result
+; source of the ASM code included here:
+; src/main/asm/div24.asm
+
+PROC Main()
+BYTE reminderH=$CA
+BYTE reminderM=$CB
+BYTE reminderL=$CC
+BYTE pztemp=$CD
+BYTE dividendH
+BYTE dividendM
+BYTE dividendL
+
+BYTE divisorH
+BYTE divisorM
+BYTE divisorL
+
+
+dividendH=0
+dividendM=0
+dividendL=200
+
+divisorL = 10
+divisorM = 0
+divisorH = 0
+
+   [$A9 $00]
+   [$85 $CA $85 $CB  $85 $CC $A2 $18]
+   [$0E dividendL $2E  dividendM $2E]
+   [dividendH $26 $CA $26]
+   [$CB $26 $CC $A5  $CA $38 $ED]
+   [divisorL $A8 $A5 $CB  $ED divisorM $85]
+   [$CD $A5 $CC $ED  divisorH $90 $0B]
+   [$85 $CC $A5 $CD]
+   [$85 $CB $84 $CA  $EE dividendL $CA]
+   [$D0 $CE]
+
+
+  Print("D1: ")
+  PrintB(dividendL)
+  Print(",")
+  PrintB(dividendM)
+  Print(",")
+  PrintB(dividendH)
+  Print(" D2: ")
+  PrintB(divisorL)
+  Print(",")
+  PrintB(divisorM)
+  Print(",")
+  PrintB(divisorH)
+  Print(" R: ")
+  PrintB(reminderL)
+  Print(",")
+  PrintB(reminderM)
+  Print(",")
+  PrintBE(reminderH)
+
+RETURN
