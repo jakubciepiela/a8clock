@@ -2,7 +2,6 @@ BYTE activeLoop
 
 INCLUDE "D2:CONSOLE.ACT"
 INCLUDE "D8:GR0.ACT"     
-INCLUDE "D8:TIME.ACT"
 
 PROC DoOption()
   activeLoop=0
@@ -10,16 +9,18 @@ return
 
 PROC Main()
   BYTE a
+  BYTE ARRAY elDef=[10 10 1 33 1 33 1 33 1 33 1 33 40 33 40 33 0 0 0]
   INITCONSOLE()
   Option=DoOption
   Graphics(0)
   activeLoop=1
-  WHILE activeLoop<>0
-    DO
-      for a = 33 to 63
-        do
-          ClearScreen(a)
-        od
-    OD
+  ; WHILE activeLoop<>0
+  ;   DO
+  ;     for a = 33 to 63
+  ;       do
+  ;         ClearScreen(a)
+  ;       od
+  ;   OD
+  DrawElement(elDef)
 RETURN
 
