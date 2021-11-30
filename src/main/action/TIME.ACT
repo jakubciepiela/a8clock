@@ -1,8 +1,11 @@
+INCLUDE "D2:CONSOLE.ACT"
 INCLUDE "D8:DIV24.ACT"
 
 MODULE
 
+BYTE activeLoop
 BYTE PalOrNtscFlag = 53258
+
 
 BYTE FUNC IsPal()
   IF PalOrNtscFlag=1 THEN
@@ -106,13 +109,20 @@ Div24(dIOHrs)
 
 RETURN
 
+PROC DoOption()
+  activeLoop=0
+return
 
-
+;to stop - press Option key
 PROC TimeTest()
   CARD i
+  INITCONSOLE()
+  Option=DoOption
   InitTime()
-  for i=0 to 1000
-  do
-    timeHHMMSS()
-  od
+
+  activeLoop=1
+  WHILE activeLoop<>0
+    DO
+      timeHHMMSS()
+    OD
 RETURN
