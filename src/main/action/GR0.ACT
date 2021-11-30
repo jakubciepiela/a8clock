@@ -2,8 +2,30 @@ MODULE
 CARD POINTER ScrBase=88
 
 PROC ClearScreen(BYTE c)
-CARD i
-BYTE POINTER p
-SetBlock(ScrBase^, 960, c)
+    SetBlock(ScrBase^, 960, c)
 RETURN
 
+PROC DrawElement(BYTE ARRAY elDef)
+  CARD i, penPos
+  byte drawStep, v
+  BYTE POINTER penPtr
+
+  penPos = elDef(0) + 40*elDef(1)
+  penPos ==+ ScrBase^
+  penPtr = penPos
+  
+  i=2
+  drawStep = elDef(i)
+  DO
+      i ==+ 1
+      v = elDef(i)
+      ; now do the drawing
+      penPtr ==+ drawStep
+
+      penPtr^ = v
+
+      i ==+ 1
+      drawStep = elDef(i)
+    UNTIL drawStep = 0 
+  OD
+RETURN
