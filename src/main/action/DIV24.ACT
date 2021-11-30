@@ -29,9 +29,9 @@ PROC Div24(
     BYTE dvrH
     BYTE dvrM
     BYTE dvrL
-  BYTE drmH=$CA
+  BYTE drmL=$CA
   BYTE drmM=$CB
-  BYTE drmL=$CC
+  BYTE drmH=$CC
 ;   BYTE pztemp=$CD
 
 dvdH = dataIO.dividendH
