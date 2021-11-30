@@ -2,6 +2,7 @@ INCLUDE "D2:CONSOLE.ACT"
 INCLUDE "D8:DIV24.ACT"
 
 MODULE
+byte lastHours, lastMinutes, lastSeconds
 
 BYTE activeLoop
 BYTE PalOrNtscFlag = 53258
@@ -17,8 +18,38 @@ RETURN (0)
 
 PROC InitTime()
   PrintE("Time lib initialized")
+  lastHours = 0
+  lastMinutes = 0
+  lastSeconds = 0
 ; checks if the system is PAL or NTSC
 ; it sets the calculation logic acordingly
+RETURN
+
+proc showTime(byte hours, minutes, seconds)
+  IF hours<>lastHours OR minutes<>lastMinutes OR seconds<>lastSeconds THEN
+    lastHours = hours
+    lastMinutes = minutes
+    lastSeconds = seconds
+
+    Print("TS= ")
+    IF hours<10 THEN
+      Print("0")
+    FI  
+    PrintB(hours)
+    Print(":")
+
+    IF minutes<10 THEN
+      Print("0")
+    FI
+    PrintB(minutes)
+    Print(":")
+    IF seconds<10 THEN
+      Print("0")
+    FI
+    PrintB(seconds)
+
+    PrintE("")
+  FI
 RETURN
 
 PROC timeHHMMSS()
@@ -27,6 +58,7 @@ PROC timeHHMMSS()
   Div24IO dIOSec ; seconds
   Div24IO dIOMin ; minutes
   Div24IO dIOHrs ; hours
+  byte hours, minutes, seconds
 
     dataIO.dividendH = hi
     dataIO.dividendM = mid
@@ -36,7 +68,7 @@ PROC timeHHMMSS()
     dataIO.divisorM = 0
     dataIO.divisorL = 60
 
-  Div24(dataIO)
+    Div24(dataIO)
 
     dIOSec.dividendH = dataIO.resultH
     dIOSec.dividendM = dataIO.resultM
@@ -44,7 +76,7 @@ PROC timeHHMMSS()
     dIOSec.divisorH = 0
     dIOSec.divisorM = 0
     dIOSec.divisorL = 60
-Div24(dIOSec)
+    Div24(dIOSec)
 
     dIOMin.dividendH = dIOSec.resultH
     dIOMin.dividendM = dIOSec.resultM
@@ -52,7 +84,7 @@ Div24(dIOSec)
     dIOMin.divisorH = 0
     dIOMin.divisorM = 0
     dIOMin.divisorL = 60
-Div24(dIOMin)
+    Div24(dIOMin)
 
     dIOHrs.dividendH = dIOMin.resultH
     dIOHrs.dividendM = dIOMin.resultM
@@ -60,53 +92,12 @@ Div24(dIOMin)
     dIOHrs.divisorH = 0
     dIOHrs.divisorM = 0
     dIOHrs.divisorL = 60
-Div24(dIOHrs)
+    Div24(dIOHrs)
 
-
-  ; Print("T:")
-  ; PrintB(lo)
-  ; Print(",")
-  ; PrintB(mid)
-  ; Print(",")
-  ; PrintB(hi)
-
-  ; Print(" R0:")
-  ; PrintB(dataIO.resultL)
-  ; Print(",")
-  ; PrintB(dataIO.resultM)
-  ; Print(",")
-  ; PrintB(dataIO.resultH)
-  ; Print("/")
-  ; PrintB(dataIO.reminderL)
-  ; Print(",")
-  ; PrintB(dataIO.reminderM)
-  ; Print(",")
-  ; PrintB(dataIO.reminderH)
-
-  ; Print(" R1:")
-  ; PrintB(dIOSec.resultL)
-  ; Print(",")
-  ; PrintB(dIOSec.resultM)
-  ; Print(",")
-  ; PrintB(dIOSec.resultH)
-  ; Print("/")
-  ; PrintB(dIOSec.reminderL)
-  ; Print(",")
-  ; PrintB(dIOSec.reminderM)
-  ; Print(",")
-  ; PrintB(dIOSec.reminderH)
-
-  Print("TS= ")
-  PrintB(dIOHrs.reminderL)
-  Print(":")
-  PrintB(dIOMin.reminderL)
-  Print(":")
-  PrintB(dIOSec.reminderL)
-
-  PrintE("")
-
-
-
+    hours = dIOHrs.reminderL
+    minutes = dIOMin.reminderL
+    seconds = dIOSec.reminderL
+    showTime(hours, minutes, seconds)
 RETURN
 
 PROC DoOption()
@@ -119,7 +110,7 @@ PROC TimeTest()
   INITCONSOLE()
   Option=DoOption
   InitTime()
-
+  PrintE("Press Option to stop")
   activeLoop=1
   WHILE activeLoop<>0
     DO
