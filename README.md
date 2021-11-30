@@ -24,3 +24,16 @@ Compile with *Action!* using command:
 ASCII to ATASCII conversion tool: [AtariTools](https://github.com/jfsantos/ataritools)
 
 
+### Credits
+
+Tools used:
+- [Altirra](https://www.virtualdub.org/altirra.html) emulator
+- [*Action!* language](https://sourceforge.net/projects/atari-action/)
+- *Action!* toolkit
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [OSSAction Plugin](https://github.com/pedgarcia/ossaction-vscode) for VSCode as described [here](https://www.vintageisthenewold.com/going-into-action-with-atari-xl-xe-part-4-using-vscode-and-action-with-syntax-highlighting)
+- [WUDNS IDE](https://www.wudsn.com/index.php/ide) - Eclipse with 6502 cross compiler
+- [MAD-ASSEMBLER](https://mads.atari8.info/mads_eng.html)
+
+Libraries used:
+- [Unsigned 24 bit integer division](https://codebase64.org/doku.php?id=base:24bit_division_24-bit_result)
