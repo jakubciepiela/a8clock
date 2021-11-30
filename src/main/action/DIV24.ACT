@@ -1,0 +1,85 @@
+; Uses compiled version of procedure defined here:
+; https://codebase64.org/doku.php?id=base:24bit_division_24-bit_result
+; source of the ASM code included here:
+; src/main/asm/div24.asm
+
+MODULE
+
+TYPE Div24IO = [    
+    BYTE dividendH
+    BYTE dividendM
+    BYTE dividendL
+    BYTE divisorH
+    BYTE divisorM
+    BYTE divisorL
+    BYTE resultH
+    BYTE resultM
+    BYTE resultL
+    BYTE reminderH
+    BYTE reminderM
+    BYTE reminderL
+    ]
+
+PROC Div24(
+    Div24IO POINTER dataIO
+    )
+    BYTE dvdH
+    BYTE dvdM
+    BYTE dvdL
+    BYTE dvrH
+    BYTE dvrM
+    BYTE dvrL
+  BYTE drmH=$CA
+  BYTE drmM=$CB
+  BYTE drmL=$CC
+;   BYTE pztemp=$CD
+
+dvdH = dataIO.dividendH
+dvdM = dataIO.dividendM
+dvdL = dataIO.dividendL
+
+dvrH = dataIO.divisorH
+dvrM = dataIO.divisorM
+dvrL = dataIO.divisorL
+
+   [$A9 $00]
+   [$85 $CA $85 $CB  $85 $CC $A2 $18]
+   [$0E dvdL $2E  dvdM $2E]
+   [dvdH $26 $CA $26]
+   [$CB $26 $CC $A5  $CA $38 $ED]
+   [dvrL $A8 $A5 $CB  $ED dvrM $85]
+   [$CD $A5 $CC $ED  dvrH $90 $0B]
+   [$85 $CC $A5 $CD]
+   [$85 $CB $84 $CA  $EE dvdL $CA]
+   [$D0 $CE]
+
+  dataIO.resultH = dvdH
+  dataIO.resultM = dvdM
+  dataIO.resultL = dvdL
+
+  dataIO.reminderH = drmH
+  dataIO.reminderM = drmM
+  dataIO.reminderL = drmL
+
+RETURN
+
+PROC DivMain()
+    Div24IO dataIO
+
+    dataIO.dividendH = 0
+    dataIO.dividendM = 3
+    dataIO.dividendL = 0
+
+    dataIO.divisorH = 0
+    dataIO.divisorM = 0
+    dataIO.divisorL = 6
+
+    Div24(dataIO)
+
+  Print("Result: ")
+  PrintB(dataIO.resultL)
+  Print(",")
+  PrintB(dataIO.resultM)
+  Print(",")
+  PrintBE(dataIO.resultH)
+RETURN
