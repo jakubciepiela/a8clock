@@ -1,6 +1,6 @@
 # Atari 8bit Clock
 
-Analog watch for Atari 8-bit computers: 800XL, 65XE, 130XE
+Analog clock for Atari 8-bit computers: 800XL, 65XE, 130XE
 
 Written in [*Action!* language](https://en.wikipedia.org/wiki/Action!_(programming_language))
 
