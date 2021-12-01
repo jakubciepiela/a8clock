@@ -1,7 +1,8 @@
 BYTE activeLoop
 
 INCLUDE "D2:CONSOLE.ACT"
-INCLUDE "D8:GR0.ACT"     
+INCLUDE "D8:GR0.ACT"  
+INCLUDE "D8:FACE.ACT"   
 
 PROC DoOption()
   activeLoop=0

@@ -1,0 +1,57 @@
+MODULE
+
+BYTE ARRAY hh00 = [10 10 1 33 0 0]
+BYTE ARRAY hh01 = [10 10 1 33 0 0]
+BYTE ARRAY hh02 = [10 10 1 33 0 0]
+BYTE ARRAY hh03 = [10 10 1 33 0 0]
+BYTE ARRAY hh04 = [10 10 1 33 0 0]
+BYTE ARRAY hh05 = [10 10 1 33 0 0]
+BYTE ARRAY hh06 = [10 10 1 33 0 0]
+BYTE ARRAY hh07 = [10 10 1 33 0 0]
+BYTE ARRAY hh08 = [10 10 1 33 0 0]
+BYTE ARRAY hh09 = [10 10 1 33 0 0]
+BYTE ARRAY hh10 = [10 10 1 33 0 0]
+BYTE ARRAY hh11 = [10 10 1 33 0 0]
+BYTE ARRAY hh12 = [10 10 1 33 0 0]
+BYTE ARRAY hh13 = [10 10 1 33 0 0]
+BYTE ARRAY hh14 = [10 10 1 33 0 0]
+BYTE ARRAY hh15 = [10 10 1 33 0 0]
+BYTE ARRAY hh16 = [10 10 1 33 0 0]
+BYTE ARRAY hh17 = [10 10 1 33 0 0]
+BYTE ARRAY hh18 = [10 10 1 33 0 0]
+BYTE ARRAY hh19 = [10 10 1 33 0 0]
+BYTE ARRAY hh20 = [10 10 1 33 0 0]
+BYTE ARRAY hh21 = [10 10 1 33 0 0]
+BYTE ARRAY hh22 = [10 10 1 33 0 0]
+BYTE ARRAY hh23 = [10 10 1 33 0 0]
+
+CARD ARRAY allHH(24)
+CARD ARRAY allMM(60)
+CARD ARRAY allSS(60)
+
+PROC InitWatcFace()
+    allHH(0) = hh00
+    allHH(1) = hh01
+    allHH(2) = hh02
+    allHH(3) = hh03
+    allHH(4) = hh04
+    allHH(5) = hh05
+    allHH(6) = hh06
+    allHH(7) = hh07
+    allHH(8) = hh08
+    allHH(9) = hh09
+    allHH(10) = hh10
+    allHH(11) = hh11
+    allHH(12) = hh12
+    allHH(13) = hh13
+    allHH(14) = hh14
+    allHH(15) = hh15
+    allHH(16) = hh16
+    allHH(17) = hh17
+    allHH(18) = hh18
+    allHH(19) = hh19
+    allHH(20) = hh20
+    allHH(21) = hh21
+    allHH(22) = hh22
+    allHH(23) = hh23
+RETURN

@@ -1,5 +1,7 @@
 INCLUDE "D2:CONSOLE.ACT"
 INCLUDE "D8:DIV24.ACT"
+INCLUDE "D8:GR0.ACT"
+INCLUDE "D8:FACE.ACT"
 
 MODULE
 byte lastHours, lastMinutes, lastSeconds
@@ -110,6 +112,7 @@ PROC TimeTest()
   INITCONSOLE()
   Option=DoOption
   InitTime()
+  InitWatcFace()
   PrintE("Press Option to stop.")
   activeLoop=1
   WHILE activeLoop<>0
