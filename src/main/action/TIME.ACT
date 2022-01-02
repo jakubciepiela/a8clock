@@ -1,3 +1,4 @@
+INCLUDE "D4:SYS.ACT"
 INCLUDE "D2:CONSOLE.ACT"
 INCLUDE "D8:DIV24.ACT"
 INCLUDE "D8:GR0.ACT"
@@ -28,29 +29,36 @@ PROC InitTime()
 RETURN
 
 proc showTime(byte hours, minutes, seconds)
+  BYTE ARRAY hhElement
+  BYTE hh
   IF hours<>lastHours OR minutes<>lastMinutes OR seconds<>lastSeconds THEN
     lastHours = hours
     lastMinutes = minutes
     lastSeconds = seconds
 
-    Print("TS= ")
-    IF hours<10 THEN
-      Print("0")
-    FI  
-    PrintB(hours)
-    Print(":")
+    ClearScreen(0)
+    hh = seconds MOD 12
+    hhElement = allHH(hh)
+    DrawElement(hhElement)
 
-    IF minutes<10 THEN
-      Print("0")
-    FI
-    PrintB(minutes)
-    Print(":")
-    IF seconds<10 THEN
-      Print("0")
-    FI
-    PrintB(seconds)
+    ; Print("TS= ")
+    ; IF hours<10 THEN
+    ;   Print("0")
+    ; FI  
+    ; PrintB(hours)
+    ; Print(":")
 
-    PrintE("")
+    ; IF minutes<10 THEN
+    ;   Print("0")
+    ; FI
+    ; PrintB(minutes)
+    ; Print(":")
+    ; IF seconds<10 THEN
+    ;   Print("0")
+    ; FI
+    ; PrintB(seconds)
+
+    ; PrintE("")
   FI
 RETURN
 
