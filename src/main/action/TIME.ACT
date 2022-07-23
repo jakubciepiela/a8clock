@@ -29,17 +29,23 @@ PROC InitTime()
 RETURN
 
 proc showTime(byte hours, minutes, seconds)
-  BYTE ARRAY hhElement
   BYTE hh
+  BYTE ARRAY hhElement
+  BYTE ss
+  BYTE ARRAY ssElement
   IF hours<>lastHours OR minutes<>lastMinutes OR seconds<>lastSeconds THEN
     lastHours = hours
     lastMinutes = minutes
     lastSeconds = seconds
 
     ClearScreen(0)
-    hh = seconds MOD 12
-    hhElement = allHH(hh)
-    DrawElement(hhElement)
+    ss = seconds MOD 60
+    ssElement = allSS(ss)
+    DrawElement(ssElement)
+
+    ; hh = seconds MOD 12
+    ; hhElement = allHH(hh)
+    ; DrawElement(hhElement)
 
     ; Print("TS= ")
     ; IF hours<10 THEN
