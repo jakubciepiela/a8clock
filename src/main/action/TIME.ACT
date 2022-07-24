@@ -43,9 +43,9 @@ proc showTime(byte hours, minutes, seconds)
     ssElement = allSS(ss)
     DrawElement(ssElement)
 
-    ; hh = seconds MOD 12
-    ; hhElement = allHH(hh)
-    ; DrawElement(hhElement)
+    hh = seconds MOD 12
+    hhElement = allHH(hh)
+    DrawElement(hhElement)
 
     ; Print("TS= ")
     ; IF hours<10 THEN
